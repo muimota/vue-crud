@@ -6,12 +6,13 @@
 
 <script>
   export default {
-    props : ['projects','field'],
+    props:['projects','field'],
     methods:{
       clickHandler(project){
-        console.log(project['title'])
+        this.$emit('selected', project)
       }
     }
+
   }
 </script>
 
