@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueStash from 'vue-stash';
+import VueStash from 'vue-stash'
+import VueResource from 'vue-resource'
 import App from './App.vue'
 
 import Home from './components/Home'
@@ -8,6 +9,9 @@ import ProjectEdit from './components/ProjectEdit'
 
 Vue.use(VueRouter)
 Vue.use(VueStash)
+Vue.use(VueResource)
+
+Vue.http.options.root = 'https://vue-http-ec65d.firebaseio.com/'
 
 const router = new VueRouter({
   routes:[
