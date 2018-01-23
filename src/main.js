@@ -24,20 +24,40 @@ const router = new VueRouter({
 
 })
 
+//load the main json before init Vue
+Vue.http.get('projects.json')
+  .then(response =>{
+    return response.json()
+  })
+  .then(data =>{
+    init(data)
+  })
 
 
-new Vue({
-  el: '#app',
-  router,
-  data:{
-    store:{
-      projects: [{id:1,title:'hola cara de bola'},{id:2,title:'proj02'}],
-      project(id){
-        let project = this.projects.filter((project) => project.id == id)
-        console.log(project)
-        return project[0]
+function init(data){
+
+  new Vue({
+    el: '#app',
+    router,
+    data(){
+      return {
+        store:{
+          projects:data
+        }
       }
-    }
-  },
-  render: h => h(App)
-})
+    },
+    mounted(){
+      console.log('init!!')
+      //populate store
+      this.$http.get('projects.json')
+        .then(response =>{
+          return response.json()
+        })
+        .then(data =>{
+          this.store.projects = data
+        })
+
+    },
+    render: h => h(App)
+  })
+}
