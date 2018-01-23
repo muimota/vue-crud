@@ -68,6 +68,9 @@ export default {
 
 </script>
 <style scoped>
+  tr{
+    cursor: pointer;
+  }
   tr:hover{
     background-color: #EEE;
   }

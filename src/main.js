@@ -4,7 +4,7 @@ import VueStash from 'vue-stash'
 import VueResource from 'vue-resource'
 import App from './App.vue'
 
-import Home from './components/Home'
+import Projects from './components/Projects'
 import ProjectEdit from './components/ProjectEdit'
 
 Vue.use(VueRouter)
@@ -15,8 +15,7 @@ Vue.http.options.root = 'https://vue-http-ec65d.firebaseio.com/'
 
 const router = new VueRouter({
   routes:[
-    {path: '/' ,  component:Home, name:'Home'},
-    {path: '/project/new/', component:ProjectEdit, name:'projectNew'},
+    {path: '/' ,  component:Projects, name:'projects'},
     {path: '/project/:id', component:ProjectEdit, name:'projectEdit', props:true}
 
   ],

@@ -43,10 +43,10 @@
     <div class="col-lg-4">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text">Type</span>
+          <label class="input-group-text" for="typeSelect">Type</label>
         </div>
-        <select v-model="project.type">
-          <option disabled value="">Please select one</option>
+        <select v-model="project.type" class="custom-select" id="typeSelect">
+          <option value="">Please select one</option>
           <option>RCR</option>
           <option>Lab-A</option>
           <option>Lab-E</option>
@@ -71,7 +71,7 @@
 
     <div class="col-lg-12 mt-4">
 
-      <router-link to="/" tag="button" class="btn btn-secondary">Back</router-link>
+      <router-link :to="{name:'projects'}" tag="button" class="btn btn-secondary">Back</router-link>
       <button class="btn btn-primary" @click="save()">Save Changes</button>
     </div>
   </div>
@@ -104,7 +104,7 @@
         this.$store.projects[this.id] = this.project
 
         resource.update({},this.project).then(
-          this.$router.push('/')
+          this.$router.push({name:'projects'})
         )
 
 
@@ -128,7 +128,7 @@
         project.references = data.references
       }
     },
-    
+
     mounted(){
 
       if(this.$store.projects != {}){
