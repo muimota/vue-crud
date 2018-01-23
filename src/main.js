@@ -6,6 +6,7 @@ import App from './App.vue'
 
 import Projects from './components/Projects'
 import ProjectEdit from './components/ProjectEdit'
+import References from './components/References'
 
 Vue.use(VueRouter)
 Vue.use(VueStash)
@@ -16,22 +17,29 @@ Vue.http.options.root = 'https://vue-http-ec65d.firebaseio.com/'
 const router = new VueRouter({
   routes:[
     {path: '/' ,  component:Projects, name:'projects'},
-    {path: '/project/:id', component:ProjectEdit, name:'projectEdit', props:true}
-
+    {path: '/project/:id', component:ProjectEdit, name:'projectEdit', props:true},
+    {path: '/references', component:References, name:'references'}
   ],
   mode:'history',
 
 })
 
 //load the main json before init Vue
-Vue.http.get('projects.json')
-  .then(response =>{
-    return response.json()
-  })
-  .then(data =>{
-    init(data)
-  })
 
+let data = {'projects':null,'references':null}
+for(let key in data){
+  Vue.http.get(key+'.json')
+    .then(response =>{
+      return response.json()
+    })
+    .then(jsonData =>{
+      data[key]=jsonData
+      if(!Object.values(data).includes(null)){
+        debugger
+        init(data)
+      }
+    })
+}
 
 function init(data){
 
@@ -40,9 +48,8 @@ function init(data){
     router,
     data(){
       return {
-        store:{
-          projects:data
-        }
+        store:{...data}
+
       }
     },
     mounted(){
