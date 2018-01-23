@@ -12,7 +12,10 @@
       </div>
     </div>
     <div class="col-lg-4">
-      <button class="btn btn-primary">New Reference</button>
+      <router-link :to="{name:'referenceEdit'}" tag="button" class="btn btn-primary">
+        New Reference
+      </router-link>
+
     </div>
   </div>
   <div class="row">
@@ -62,7 +65,7 @@ export default {
   methods:{
     selectHandler(reference){
       console.log(reference.id)
-      const referenceId = reference.id
+      this.$router.push({ name: 'referenceEdit', params: { id:  reference.id }}) // -> /user/123
     },
 
   },

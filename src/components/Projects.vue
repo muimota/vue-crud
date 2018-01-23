@@ -62,7 +62,6 @@ export default {
 
   },
   created(){
-    debugger
     this.projects = this.$store.projects
   }
 }

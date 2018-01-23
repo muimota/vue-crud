@@ -6,7 +6,10 @@ import App from './App.vue'
 
 import Projects from './components/Projects'
 import ProjectEdit from './components/ProjectEdit'
+
 import References from './components/References'
+import ReferenceEdit from './components/ReferenceEdit'
+
 
 Vue.use(VueRouter)
 Vue.use(VueStash)
@@ -18,7 +21,8 @@ const router = new VueRouter({
   routes:[
     {path: '/' ,  component:Projects, name:'projects'},
     {path: '/project/:id', component:ProjectEdit, name:'projectEdit', props:true},
-    {path: '/references', component:References, name:'references'}
+    {path: '/references', component:References, name:'references'},
+    {path: '/reference/:id', component:ReferenceEdit, name:'referenceEdit', props:true},
   ],
   mode:'history',
 
@@ -34,8 +38,8 @@ for(let key in data){
     })
     .then(jsonData =>{
       data[key]=jsonData
+      //if there are no nulls consider all data is loaded
       if(!Object.values(data).includes(null)){
-        debugger
         init(data)
       }
     })
@@ -54,15 +58,6 @@ function init(data){
     },
     mounted(){
       console.log('init!!')
-      //populate store
-      this.$http.get('projects.json')
-        .then(response =>{
-          return response.json()
-        })
-        .then(data =>{
-          this.store.projects = data
-        })
-
     },
     render: h => h(App)
   })
