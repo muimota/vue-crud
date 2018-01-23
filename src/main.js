@@ -10,7 +10,9 @@ import ProjectEdit from './components/ProjectEdit'
 import References from './components/References'
 import ReferenceEdit from './components/ReferenceEdit'
 
+import Header from './components/Header.vue'
 
+Vue.component('app-header',Header)
 Vue.use(VueRouter)
 Vue.use(VueStash)
 Vue.use(VueResource)

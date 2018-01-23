@@ -1,7 +1,8 @@
 <template>
   <div>
-  <h1>References</h1>
-  <hr>
+    <hr>
+      <app-header></app-header>
+    <hr>
   <div class="row">
     <div class="col-lg-4">
       <div class="input-group mb-3 ">

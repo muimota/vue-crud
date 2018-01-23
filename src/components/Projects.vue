@@ -1,6 +1,7 @@
 <template>
   <div>
-  <h1>Projects</h1>
+    <hr>
+    <app-header></app-header>
   <hr>
   <div class="col-lg-4">
     <div class="input-group mb-3 ">
