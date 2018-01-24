@@ -10,12 +10,17 @@ import ProjectEdit from './components/ProjectEdit'
 import References from './components/References'
 import ReferenceEdit from './components/ReferenceEdit'
 
+import Taxonomy from './components/Taxonomy'
+
 import Header from './components/Header.vue'
+import Autocomplete from 'v-autocomplete'
+
 
 Vue.component('app-header',Header)
 Vue.use(VueRouter)
 Vue.use(VueStash)
 Vue.use(VueResource)
+Vue.use(Autocomplete)
 
 Vue.http.options.root = 'https://vue-http-ec65d.firebaseio.com/'
 
@@ -25,6 +30,7 @@ const router = new VueRouter({
     {path: '/project/:id', component:ProjectEdit, name:'projectEdit', props:true},
     {path: '/references', component:References, name:'references'},
     {path: '/reference/:id', component:ReferenceEdit, name:'referenceEdit', props:true},
+    {path: '/taxonomy', component:Taxonomy, name:'taxonomy'}
   ],
   mode:'history',
 

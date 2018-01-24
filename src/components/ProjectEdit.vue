@@ -55,18 +55,44 @@
         </select>
       </div>
     </div>
+    <hr>
+    <div class="col-lg-9 mt-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Reference</span>
+        </div>
+        <v-autocomplete class="form-control" :items="items" v-model="item"  :min-len="1" :get-label="getLabel" :wait="0" :auto-select-one-item="false" :component-item="template" @update-items="updateItems">
+        </v-autocomplete>
+      </div>
+    </div>
+    <div class="col-lg-3 mt-4">
+      <button class="btn btn-secondary" @click="addReference">Add Reference</button>
+    </div>
+    <div class="col-lg-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" class="col-sm-10" >Reference</th>
+            <th scope="col" class="col-sm-2" >Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="referenceItem in referenceItems" >
+            <td>{{referenceItem.shortname}}</td>
+            <td><span class="badge-button badge badge-secondary badge-danger" @click="deleteReference(referenceItem.id)">Delete</span></h6></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="col-lg-12">
       <hr>
       <h6>Team:</h6>
       <input-tag :tags="project.team" :on-change="(tags)=>{project.team = tags}"></input-tag>
     </div>
+
     <div class="col-lg-12 mt-4">
       <h6>Tags:</h6>
       <input-tag :tags="project.tags" :on-change="(tags)=>{project.tags = tags}" ></input-tag>
-    </div>
-    <div class="col-lg-12 mt-4">
-      <h6>References:</h6>
-      <input-tag :tags="project.references" :on-change="(tags)=>{project.references = tags}" ></input-tag>
     </div>
 
     <div class="col-lg-12 mt-4">
@@ -79,6 +105,7 @@
 <script>
 
   import InputTag from 'vue-input-tag'
+  import ItemTemplate from './ItemTemplate.vue'
 
   export default{
     components: { InputTag },
@@ -92,11 +119,24 @@
         startYear:0,
         endYear:0,
         team:[],
-        tags:[]
+        tags:[],
+        references:[]
       },
-      resource:{}
+      items:[],
+      item:null,
+      template: ItemTemplate
     }),
+    computed:{
+      referenceItems(){
 
+        let referenceItems = []
+        for(let referenceId of this.project.references){
+          let referenceItem = this.$store.references[referenceId]
+          referenceItems.push(referenceItem)
+        }
+        return referenceItems
+      }
+    },
     methods:{
       save(){
         let resource = this.$resource(`projects/${this.id}.json`)
@@ -116,19 +156,51 @@
 
         console.log(this.id)
         let project = this.project
-        project.id        = data.id
-        project.name      = data.name
-        project.type      = data.type
-        project.shortname = data.shortname
-        project.startYear = data.startYear | 0
-        project.endYear   = data.endYear | 0
-        project.team      = data.team
-        project.memory    = data.memory
-        project.tags      = data.tags
-        project.references = data.references
-      }
-    },
+        project.id         = data.id
+        project.name       = data.name
+        project.type       = data.type
+        project.shortname  = data.shortname
+        project.startYear  = data.startYear | 0
+        project.endYear    = data.endYear | 0
+        project.team       = data.team
+        project.memory     = data.memory
+        project.tags       = data.tags
+        project.references = data.references || []
+      },
+      getLabel (item) {
+       if (item) {
+         return item.shortname
+       }
+       return ''
+     },
+     updateItems (text) {
+       if(text == null){return}
+       let filteredItems = Object.values(this.$store.references)
+       //https://stackoverflow.com/a/3939752/2205297
+       let r = new RegExp(text,'i')
+       if(text.trim() != '' ){
+         filteredItems = filteredItems.filter(
+           reference => reference.shortname.match(r))
+       }
+       this.items =  filteredItems
 
+     },
+     addReference(){
+       console.log(this.item)
+
+       if(this.item){
+         let referenceId = this.item.id
+         if(!this.project.references.includes(referenceId)){
+           this.project.references.push(referenceId)
+         }
+       }
+     },
+     deleteReference(itemId){
+       console.log(itemId)
+       let index = this.project.references.indexOf(itemId)
+       this.project.references.splice(index,1)
+     }
+   },
     mounted(){
 
       if(this.$store.projects != {}){
@@ -137,3 +209,27 @@
     }
   }
 </script>
+
+<style>
+.v-autocomplete-list{
+  position: absolute;
+  z-index: 1;
+  display: inline-block;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.v-autocomplete-item{
+  display:block;
+}
+.v-autocomplete-item-active{
+  background-color: #EEE;
+}
+.v-autocomplete-input{
+  width: 100%;
+  border: none;
+}
+.badge-button{
+  cursor: pointer;
+}
+</style>

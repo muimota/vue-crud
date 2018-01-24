@@ -43,16 +43,20 @@
       <input-tag :tags="reference.tags" :on-change="(tags)=>{reference.tags = tags}" ></input-tag>
     </div>
 
-    <div class="col-lg-12 mt-4">
-
+    <div class="col-lg-6 mt-4">
       <router-link :to="{name:'references'}" tag="button" class="btn btn-secondary">Back</router-link>
       <button class="btn btn-primary" @click="save()">Save Changes</button>
+    </div>
+    <div class="col-lg-3 mt-4"></div>
+    <div class="col-lg-3 mt-4">
+      <button class="btn btn-danger pull-right" @click="save()">Delete Reference</button>
     </div>
   </div>
 </template>
 <script>
 
   import InputTag from 'vue-input-tag'
+  
 
   export default{
     components: { InputTag },
