@@ -49,14 +49,15 @@
     </div>
     <div class="col-lg-3 mt-4"></div>
     <div class="col-lg-3 mt-4">
-      <button class="btn btn-danger pull-right" @click="save()">Delete Reference</button>
+      <button class="btn btn-danger pull-right"
+        @click="deleteReference(reference.id)" :disabled="deleteable == false" >Delete Reference</button>
     </div>
   </div>
 </template>
 <script>
 
   import InputTag from 'vue-input-tag'
-  
+
 
   export default{
     components: { InputTag },
@@ -71,7 +72,26 @@
       },
       resource:{}
     }),
+    computed:{
+      deleteable(){
 
+        let deleteable  = true
+
+        for(let projectId in this.$store.projects){
+
+          let project = this.$store.projects[projectId]
+
+          if('references' in project && project.references.includes(this.reference.id)){
+            deleteable = false
+          }
+
+        }
+
+        return deleteable
+
+      }
+
+    },
     methods:{
       save(){
         let resource = this.$resource(`references/${this.id}.json`)
@@ -81,7 +101,20 @@
         resource.update({},this.reference).then(
           this.$router.push({name:'references'})
         )
+      },
+      deleteReference(){
 
+        if(confirm("seguro?") == false){
+          return
+        }
+
+        delete this.$store.references[this.id]
+
+        let resource = this.$resource(`references/${this.id}.json`)
+
+        resource.delete({id:this.id}).then(
+          this.$router.push({name:'references'})
+        )
 
       },
       loadData(){
