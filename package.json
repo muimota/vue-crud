@@ -15,8 +15,7 @@
     "vue-input-tag": "0.0.16",
     "vue-resource": "^1.3.5",
     "vue-router": "^3.0.1",
-    "vue-stash": "^2.0.1-beta",
-    "vuex": "^3.0.1"
+    "vue-stash": "^2.0.1-beta"
   },
   "browserslist": [
     "> 1%",
