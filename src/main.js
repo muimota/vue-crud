@@ -33,6 +33,7 @@ const router = new VueRouter({
     {path: '/taxonomy', component:Taxonomy, name:'taxonomy'}
   ],
   mode:'history',
+  //base:'/ines/editor/'
 
 })
 
