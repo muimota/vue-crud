@@ -17,9 +17,12 @@
       </router-link>
     </li>
     <li class="nav-item">
-      <router-link to="/team" tag="a" class="nav-link" active-class="active" exact>
+      <a href="#" class="nav-link">
         Professionals
-      </router-link>
+      </a>
+    </li>
+    <li>
+      <button class="btn btn-info" @click="download" >Download File</button>
     </li>
   </ul>
 </template>
@@ -27,7 +30,19 @@
 <script>
 
 export default {
+  methods:{
+    download(){
+      //https://stackoverflow.com/a/30800715/2205297
+      let exportObj = this.$store
+      var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+      var downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href",     dataStr);
+      downloadAnchorNode.setAttribute("download", 'export.json');
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
 
+    }
+  }
 }
 
 </script>
