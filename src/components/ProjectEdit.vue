@@ -45,7 +45,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text">Memory</span>
         </div>
-        <textarea v-model="project.memory" class="form-control"  rows="6"></textarea>
+        <textarea v-model="memory" class="form-control"  rows="6"></textarea>
       </div>
     </div>
     <div class="col-lg-4">
@@ -142,6 +142,7 @@
         tags:[],
         references:[]
       },
+      memory:"",
       //autocomplete-variables
       items:[],
       item:null,
@@ -160,15 +161,19 @@
     },
     methods:{
       save(){
-        let resource = this.$resource(`projects/${this.id}.json`)
+        let projRes = this.$resource(`projects/${this.id}.json`)
+        let dataRes = this.$resource(`data/${this.id}.json`)
 
         this.$store.projects[this.id] = this.project
-        console.log(this.project)
-        resource.update({},this.project).then(
-          this.$router.push({name:'projects'})
+
+        projRes.update({},this.project).then( ()=>{
+          let memory = (this.memory.trim().length == 0 ) ? null : this.memory.trim()
+
+          dataRes.update({},{'memory':memory}).then(
+            this.$router.push({name:'projects'})
+          )
+          }
         )
-
-
       },
       loadData(){
 
@@ -185,9 +190,19 @@
         project.startYear  = data.startYear | 0
         project.endYear    = data.endYear | 0
         project.team       = data.team
-        project.memory     = data.memory
         project.tags       = data.tags || []
         project.references = data.references || []
+
+        //load external data
+        let resource = this.$resource(`data/${this.id}.json`)
+          resource.get({}).then(response => {
+
+            if( response.body ){
+              this.memory = response.body.memory || ""
+            }
+
+          })
+
 
       },
       getLabel (item) {
