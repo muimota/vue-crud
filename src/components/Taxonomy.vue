@@ -56,20 +56,32 @@ export default {
   },
   methods:{
     countTags(){
-      let tagsCounter = {}
 
+      let tagsCounter = {}
       let projects = this.$store.projects
+
       for(let key in projects){
+
         if( 'tags' in projects[key]){
+
           let projectTags = projects[key].tags
+
           for(let tag of projectTags){
+
             if( tag in tagsCounter){
+
               tagsCounter[tag].projects ++
+
             }else{
+
               tagsCounter[tag] = { 'projects':1, 'references':0}
+
             }
+
           }
+
         }
+
       }
       //ire al infierno
       let references = this.$store.references
