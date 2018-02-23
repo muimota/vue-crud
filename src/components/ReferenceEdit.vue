@@ -19,9 +19,9 @@
     <div class="col-lg-12">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text">Memory</span>
+          <span class="input-group-text">Description</span>
         </div>
-        <textarea v-model="memory" class="form-control"  rows="6"></textarea>
+        <textarea v-model="description" class="form-control"  rows="6"></textarea>
       </div>
     </div>
     <div class="col-lg-5">
@@ -70,7 +70,7 @@
         shortname:'',
         tags:[]
       },
-      memory:"",
+      description:"",
     }),
     computed:{
       deleteable(){
@@ -94,20 +94,20 @@
     },
     methods:{
       save(){
-          let refRes = this.$resource(`references/${this.id}.json`)
-          let dataRes = this.$resource(`data/${this.id}.json`)
+        let refRes = this.$resource(`references/${this.id}.json`)
+        let dataRes = this.$resource(`data/${this.id}.json`)
 
-          this.$store.references[this.id] = this.reference
+        this.$store.references[this.id] = this.reference
 
-          refRes.update({},this.reference).then( ()=>{
-            let memory = (this.memory.trim().length == 0 ) ? null : this.memory.trim()
+        refRes.update({},this.reference).then( ()=>{
+          let description = (this.description.trim().length == 0 ) ? null : this.description.trim()
 
-            dataRes.update({},{'memory':memory}).then(
-              this.$router.push({name:'references'})
-            )
-            }
+          dataRes.update({},{'description':description}).then(
+            this.$router.push({name:'references'})
           )
-        },
+          }
+        )
+      },
 
       deleteReference(){
 
@@ -142,7 +142,7 @@
           resource.get({}).then(response => {
 
             if( response.body ){
-              this.memory = response.body.memory || ""
+              this.description = response.body.description || ""
             }
 
           })
@@ -157,7 +157,7 @@
         let referenceIds = Object.keys(this.$store.references)
         referenceIds.sort()
         //@TODO: empty array
-        let lastId = referenceIds[referenceIds.length - 1].split('REF-')[1] | 0
+        let lastId = referenceIds[referenceIds.length - 1].split('REF-')[1] || 0
         this.id = this.reference.id = 'REF-'+(lastId + 1)
 
       }else{
