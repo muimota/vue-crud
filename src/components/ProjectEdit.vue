@@ -109,8 +109,12 @@
     </div>
 
     <div class="col-lg-12 mt-4">
-      <h6>Tags:</h6>
-      <input-tag :tags="project.tags" :on-change="(tags)=>{project.tags = tags}" ></input-tag>
+      <h6>Space:</h6>
+      <input-tag :tags="project.space" :on-change="(tags)=>{project.space = tags}" ></input-tag>
+      <h6>Atmosphere:</h6>
+      <input-tag :tags="project.atmosphere" :on-change="(tags)=>{project.atmosphere = tags}" ></input-tag>
+      <h6>Materiality:</h6>
+      <input-tag :tags="project.materiality" :on-change="(tags)=>{project.materiality = tags}" ></input-tag>
     </div>
 
     <div class="col-lg-12 mt-4">
@@ -139,7 +143,9 @@
         endYear:0,
         surface:0,
         team:[],
-        tags:[],
+        space:[],
+        atmosphere:[],
+        materiality:[],
         references:[]
       },
       memory:"",
@@ -180,18 +186,20 @@
 
         let data = this.$store.projects[this.id]
 
-        let project = this.project
-        project.id         = data.id
-        project.name       = data.name
-        project.type       = data.type
-        project.shortname  = data.shortname
-        project.typology   = data.typology
-        project.surface    = data.surface
-        project.startYear  = data.startYear | 0
-        project.endYear    = data.endYear | 0
-        project.team       = data.team
-        project.tags       = data.tags || []
-        project.references = data.references || []
+        let project         = this.project
+        project.id          = data.id
+        project.name        = data.name
+        project.type        = data.type
+        project.shortname   = data.shortname
+        project.typology    = data.typology
+        project.surface     = data.surface
+        project.startYear   = data.startYear | 0
+        project.endYear     = data.endYear | 0
+        project.team        = data.team
+        project.space       = data.space       || []
+        project.atmosphere  = data.atmosphere  || []
+        project.materiality = data.materiality || []
+        project.references  = data.references  || []
 
         //load external data
         let resource = this.$resource(`data/${this.id}.json`)
