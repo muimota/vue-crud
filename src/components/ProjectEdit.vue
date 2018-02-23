@@ -34,9 +34,9 @@
         <select v-model="project.type" class="custom-select" id="typeSelect">
           <option value="">Please select one</option>
           <option>RCR</option>
-          <option>Lab-A</option>
-          <option>Lab-E</option>
-          <option>Lab-F</option>
+          <option>LabA-Architecture</option>
+          <option>LabA-Scenography</option>
+          <option>LabA-Audiovisual</option>
         </select>
       </div>
     </div>

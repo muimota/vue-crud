@@ -21,7 +21,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text">Memory</span>
         </div>
-        <textarea v-model="reference.memory" class="form-control"  rows="6"></textarea>
+        <textarea v-model="memory" class="form-control"  rows="6"></textarea>
       </div>
     </div>
     <div class="col-lg-5">
@@ -70,7 +70,7 @@
         shortname:'',
         tags:[]
       },
-      resource:{}
+      memory:"",
     }),
     computed:{
       deleteable(){
@@ -94,14 +94,21 @@
     },
     methods:{
       save(){
-        let resource = this.$resource(`references/${this.id}.json`)
+          let refRes = this.$resource(`references/${this.id}.json`)
+          let dataRes = this.$resource(`data/${this.id}.json`)
 
-        this.$store.references[this.id] = this.reference
+          this.$store.references[this.id] = this.reference
 
-        resource.update({},this.reference).then(
-          this.$router.push({name:'references'})
-        )
-      },
+          refRes.update({},this.reference).then( ()=>{
+            let memory = (this.memory.trim().length == 0 ) ? null : this.memory.trim()
+
+            dataRes.update({},{'memory':memory}).then(
+              this.$router.push({name:'references'})
+            )
+            }
+          )
+        },
+
       deleteReference(){
 
         if(confirm("seguro?") == false){
@@ -128,8 +135,18 @@
         reference.name      = data.name
         reference.type      = data.type
         reference.shortname = data.shortname
-        reference.memory    = data.memory
         reference.tags      = data.tags
+
+        //load external data
+        let resource = this.$resource(`data/${this.id}.json`)
+          resource.get({}).then(response => {
+
+            if( response.body ){
+              this.memory = response.body.memory || ""
+            }
+
+          })
+
       }
     },
 
