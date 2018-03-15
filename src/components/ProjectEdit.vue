@@ -18,6 +18,14 @@
         <input v-model="project.shortname" type="text" id="inputGroup-sizing-default" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
     </div>
+    <div class="col-lg-12">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Link</span>
+        </div>
+        <input v-model="project.link" type="text" id="inputGroup-sizing-default" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+    </div>
     <div class="col-lg-8">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -102,7 +110,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
     <div class="col-lg-12">
       <hr>
       <h6>Team:</h6>
@@ -138,6 +146,7 @@
         id:'',
         name:'',
         shortname:'',
+        link:'',
         typology:'',
         type:'',
         startYear:0,
@@ -192,6 +201,7 @@
         project.name        = data.name
         project.type        = data.type
         project.shortname   = data.shortname
+        project.link        = data.link
         project.typology    = data.typology
         project.surface     = data.surface
         project.startYear   = data.startYear | 0

@@ -15,6 +15,12 @@
         </div>
         <input v-model="reference.shortname" type="text" id="inputGroup-sizing-default" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Link</span>
+        </div>
+        <input v-model="reference.link" type="text" id="inputGroup-sizing-default" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
     </div>
     <div class="col-lg-12">
       <div class="input-group mb-3">
@@ -68,6 +74,7 @@
         type:'',
         name:'',
         shortname:'',
+        link:'',
         tags:[]
       },
       description:"",
@@ -135,6 +142,7 @@
         reference.name      = data.name
         reference.type      = data.type
         reference.shortname = data.shortname
+        reference.link      = data.link
         reference.tags      = data.tags
 
         //load external data
