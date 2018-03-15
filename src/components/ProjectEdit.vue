@@ -72,8 +72,9 @@
         <input v-model.number="project.surface" type="number" step="0.01" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
     </div>
-
+<!--
     <hr>
+
     <div class="col-lg-9 mt-4">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
