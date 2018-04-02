@@ -40,12 +40,12 @@ const router = new VueRouter({
 //load the main json before init Vue
 
 let data = {'projects':null,'references':null}
+
 for(let key in data){
   Vue.http.get(key+'.json')
-    .then(response =>{
-      return response.json()
-    })
+    .then(response =>response.json())
     .then(jsonData =>{
+      jsonData = jsonData || {}
       data[key]=jsonData
       //if there are no nulls consider all data is loaded
       if(!Object.values(data).includes(null)){
