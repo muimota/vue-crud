@@ -31,7 +31,20 @@
         <div class="input-group-prepend">
           <span class="input-group-text">Typology</span>
         </div>
-        <input v-model="project.typology" type="text" id="inputGroup-sizing-default" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <!-- <input v-model="project.typology" type="text" id="inputGroup-sizing-default" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"> -->
+        <select v-model="project.typology" class="custom-select" id="typeSelect">
+          <option value="">Please select one</option>
+          <option>viviendas</option>
+          <option>pabellón</option>
+          <option>cultural</option>
+          <option>deportivo</option>
+          <option>educativo</option>
+          <option>espacio público</option>
+          <option>restaurante</option>
+          <option>actividades</option>
+          <option>efímero</option>
+          <option>visual</option>
+        </select>
       </div>
     </div>
     <div class="col-lg-4">
