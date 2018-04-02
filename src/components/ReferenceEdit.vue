@@ -161,12 +161,17 @@
     mounted(){
 
       if(this.id == null){
-
+        let lastId
         let referenceIds = Object.keys(this.$store.references)
         referenceIds.sort()
-        //@TODO: empty array
-        let lastId = referenceIds[referenceIds.length - 1].split('REF-')[1] || 0
-        this.id = this.reference.id = 'REF-'+(lastId + 1)
+
+        if(referenceIds .length == 0){
+          lastId = 0
+        }else{
+          lastId = referenceIds[referenceIds.length - 1].split('REF-')[1] | 0
+        }
+        // TODO: avoid mutating a prop, this shouldbe in parent component
+        this.id = this.reference.id = 'REF-'+(""+(lastId + 1)).padStart(4, "0")
 
       }else{
 
